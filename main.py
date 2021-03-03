@@ -34,45 +34,62 @@ def filename_to_english(file_names):
         root = tree.getroot()
 
         # tag to modify
-        target_tag = root.find("filename")
+        filename_tag = root.find("filename")
+        path_tag = root.find("path")
 
         if file_name == '고무줄':
+            path_tag.text = path_tag.text.replace(file_name, 'band')
             file_name = 'band'
         elif file_name == '리모컨':
+            path_tag.text = path_tag.text.replace(file_name, 'remoteControl')
             file_name = 'remoteControl'
         elif file_name == '멀티탭':
+            path_tag.text = path_tag.text.replace(file_name, 'multiOutlet')
             file_name = 'multiOutlet'
         elif file_name == '반려동물':
+            path_tag.text = path_tag.text.replace(file_name, 'pet')
             file_name = 'pet'
         elif file_name == '배변패드':
+            path_tag.text = path_tag.text.replace(file_name, 'pooPad')
             file_name = 'pooPad'
         elif file_name == '빨래감':
+            path_tag.text = path_tag.text.replace(file_name, 'laundry')
             file_name = 'laundry'
         elif file_name == '빨래건조대':
+            path_tag.text = path_tag.text.replace(file_name, 'laundryBar')
             file_name = 'laundryBar'
         elif file_name == '실내슬리퍼':
+            path_tag.text = path_tag.text.replace(file_name, 'slipper')
             file_name = 'slipper'
         elif file_name == '의자다리':
+            path_tag.text = path_tag.text.replace(file_name, 'chairLegs')
             file_name = 'chairLegs'
         elif file_name == '장난감':
+            path_tag.text = path_tag.text.replace(file_name, 'toy')
             file_name = 'toy'
         elif file_name == '전선':
+            path_tag.text = path_tag.text.replace(file_name, 'electricWire')
             file_name = 'electricWire'
         elif file_name == '조명받침대':
+            path_tag.text = path_tag.text.replace(file_name, 'stand')
             file_name = 'stand'
         elif file_name == '초코파이똥':
+            path_tag.text = path_tag.text.replace(file_name, 'poo')
             file_name = 'poo'
         elif file_name == '커튼아랫단':
+            path_tag.text = path_tag.text.replace(file_name, 'curtain')
             file_name = 'curtain'
         elif file_name == '필기구':
+            path_tag.text = path_tag.text.replace(file_name, 'stationary')
             file_name = 'stationary'
         elif file_name == '핸드폰':
+            path_tag.text = path_tag.text.replace(file_name, 'smartPhone')
             file_name = 'smartPhone'
 
         jpg_name = file_name + '_' + file_num + '.jpg'
         xml_name = file_name + '_' + file_num + '.xml'
 
-        target_tag.text = jpg_name  # new string
+        filename_tag.text = jpg_name  # new string
         tree.write(english_dir_path + '/' + xml_name)
 
         shutil.copyfile(origin_dir_path + '/' + origin_jpg_name, english_dir_path + '/' + jpg_name)

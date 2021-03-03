@@ -1,7 +1,7 @@
 import os
 import shutil
 
-dir_path = r'C:\Users\hong0\PycharmProjects\image-scrapping\images'
+dir_path = r'.\images'
 
 def createFolder(directory):
     try:
@@ -74,6 +74,7 @@ def main():
     divide_set(file_names)
 
     print('done.')
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

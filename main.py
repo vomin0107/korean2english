@@ -1,9 +1,12 @@
 import os
 import shutil
+import xml.etree.ElementTree as ET
 
-dir_path = r'.\images'
+origin_dir_path = r'./images'
+english_dir_path = r'./to_english'
 
-def createFolder(directory):
+
+def create_folder(directory):
     try:
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -11,7 +14,7 @@ def createFolder(directory):
         print('Error: Creating directory. ' + directory)
 
 
-def divide_set(file_names):
+def filename_to_english(file_names):
     file_names_len = len(file_names)
 
     for i in range(file_names_len):
@@ -19,6 +22,19 @@ def divide_set(file_names):
         file_name = file_names[i].split('_')[0]
         file_num = file_names[i].split('_')[1]
         print(file_name, file_num)
+
+        origin_jpg_name = origin_file_name + '.jpg'
+        origin_xml_name = origin_file_name + '.xml'
+
+        target_path = origin_dir_path + "/" + origin_xml_name
+        target_xml = open(target_path, 'rt', encoding='UTF8')
+
+        tree = ET.parse(target_xml)
+
+        root = tree.getroot()
+
+        # tag to modify
+        target_tag = root.find("filename")
 
         if file_name == '고무줄':
             file_name = 'band'
@@ -55,27 +71,27 @@ def divide_set(file_names):
 
         jpg_name = file_name + '_' + file_num + '.jpg'
         xml_name = file_name + '_' + file_num + '.xml'
-        origin_jpg_name = origin_file_name + '.jpg'
-        origin_xml_name = origin_file_name + '.xml'
-        shutil.copyfile(dir_path + '/' + origin_jpg_name, './to_english/' + jpg_name)
-        shutil.copyfile(dir_path + '/' + origin_xml_name, './to_english/' + xml_name)
+
+        target_tag.text = jpg_name  # new string
+        tree.write(english_dir_path + '/' + xml_name)
+
+        shutil.copyfile(origin_dir_path + '/' + origin_jpg_name, english_dir_path + '/' + jpg_name)
 
 
 def main():
-    os_files = os.listdir(dir_path)
+    os_files = os.listdir(origin_dir_path)
     file_names = []
 
     for dir in os_files:
         if dir[:-4] not in file_names:
             file_names.append(dir[:-4])
 
-    createFolder('./to_english')
+    create_folder('./to_english')
 
-    divide_set(file_names)
+    filename_to_english(file_names)
 
     print('done.')
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
